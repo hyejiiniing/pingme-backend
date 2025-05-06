@@ -1,6 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -8,15 +9,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  @ApiOperation({ summary: '회원가입 API' })
-  async signup(
-    @Body() body: { email: string; password: string; nickname: string },
-  ) {
-    return this.authService.signup(body.email, body.password, body.nickname);
+  @ApiOperation({ summary: '회원가입' })
+  async signup(@Body() createUserDto: CreateUserDto) {
+    return this.authService.signup(createUserDto);
   }
 
   @Post('login')
-  @ApiOperation({ summary: '로그인 API' })
+  @ApiOperation({ summary: '로그인' })
   async login(@Body() body: { email: string; password: string }) {
     return this.authService.login(body.email, body.password);
   }
