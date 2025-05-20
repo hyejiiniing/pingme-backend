@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
@@ -18,12 +18,16 @@ export class AuthService {
 
     const user = await this.userService.findByEmail(email);
     if (!user) {
-      throw new Error('이메일 또는 비밀번호가 올바르지 않습니다.');
+      throw new UnauthorizedException(
+        '이메일 또는 비밀번호가 올바르지 않습니다.',
+      );
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Error('이메일 또는 비밀번호가 올바르지 않습니다.');
+      throw new UnauthorizedException(
+        '이메일 또는 비밀번호가 올바르지 않습니다.',
+      );
     }
 
     return { message: '로그인 성공' };

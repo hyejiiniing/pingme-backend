@@ -19,6 +19,9 @@ export class User {
   @Column({ unique: true })
   nickname: string;
 
+  @Column({ nullable: true })
+  provider?: string;
+
   @CreateDateColumn()
   createdAt: Date;
 }

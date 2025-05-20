@@ -26,6 +26,20 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  async createSocial(
+    email: string,
+    nickname: string,
+    provider: string,
+  ): Promise<User> {
+    const user = this.userRepository.create({
+      email,
+      nickname,
+      password: '',
+      provider,
+    });
+    return this.userRepository.save(user);
+  }
+
   async findByEmail(email: string): Promise<User | undefined> {
     const user = await this.userRepository.findOne({ where: { email } });
     return user ?? undefined;
