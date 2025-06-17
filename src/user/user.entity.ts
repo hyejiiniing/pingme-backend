@@ -19,7 +19,7 @@ export class User {
   @Column({ unique: true })
   nickname: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 'local' })
   provider?: string;
 
   @CreateDateColumn()
